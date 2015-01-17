@@ -1,5 +1,5 @@
-Polygons.remove({});
-Events.remove({});
+//Polygons.remove({});
+//Events.remove({});
 if(Polygons.find().count() == 0){
 	Polygons.insert({
 		coordinates:[
@@ -17,8 +17,27 @@ if(Polygons.find().count() == 0){
 
 if(Events.find().count() == 0){
 	Events.insert({
-		lat:57,
-		lon:12,
-		description:"Beskrivning"
+		lat:57.721836,
+		lon:11.952035,
+		description:"Brand i Backa",
+		visible:true
+	});
+	Events.insert({
+		lat:57.708839,
+		lon:11.939031,
+		description:"Buss försenad",
+		visible:true
+	});
+	Events.insert({
+		lat:57.705756,
+		lon:11.935523,
+		description:"Konsert på Backa teater",
+		visible:true
+	});
+	Events.insert({
+		lat:57.707750,
+		lon:11.926747,
+		description:"Tävling isfiske - Sannegården",
+		visible:true
 	});
 }
