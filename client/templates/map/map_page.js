@@ -47,40 +47,62 @@ Template.mapPage.rendered = function(){
 	  }; 
 
 	  var mapOptions = {
-	    zoom: 15,
+	    zoom: 13,
 	    center: new google.maps.LatLng(57.13,11.87)
 	  };
-	  var map = new google.maps.Map(document.getElementById('map'),mapOptions);
+	  map = new google.maps.Map(document.getElementById('map'),mapOptions);
 
 	  /*google.maps.event.addListener(map, 'click', function(e) {
 	    placeMarker(e.latLng, map);
 	  }); */
 	  //console.log(this.data[0]);
+	  var polygons = this.data[0];
+
+
 	  var polygonCoords = [];
-	  for(var i = 0;i<this.data.length;i++){
-		  for(var j = 0;j<this.data[i].coordinates.length;j++){
-		    var position = new google.maps.LatLng(this.data[i].coordinates[j].lat,this.data[i].coordinates[j].lon);
+	  polygonArr = [];
+	  for(var i = 0;i<polygons.length;i++){
+		  for(var j = 0;j<polygons[i].coordinates.length;j++){
+		    var position = new google.maps.LatLng(polygons[i].coordinates[j].lat,polygons[i].coordinates[j].lon);
 		    polygonCoords.push(position);
 			/*var marker = new google.maps.Marker({
 				position: position,
 				map:map
 			});*/
-			console.log(this.data[i].coordinates[j]);
+			map.panTo(position);
 		  }
+		  var curPolygon = new google.maps.Polygon({
+		    paths: polygonCoords,
+		    strokeColor: '#FF0000',
+		    strokeOpacity: 0.8,
+		    strokeWeight: 3,
+		    fillColor: '#FF0000',
+		    fillOpacity: 0.35
+		  });
+		  polygonArr.push(curPolygon);
+		  curPolygon.setMap(map);
 	  }
 
-	  curpolygon = new google.maps.Polygon({
-	    paths: polygonCoords,
-	    strokeColor: '#FF0000',
-	    strokeOpacity: 0.8,
-	    strokeWeight: 3,
-	    fillColor: '#FF0000',
-	    fillOpacity: 0.35
-	  });
-	  curpolygon.setMap(map);
-	  map.panTo(position);
+	  var events = this.data[1];
+	  console.log(events);
+	  markers = [];
+	  for(var i = 0;i<events.length;i++){
+		    var position = new google.maps.LatLng(events[i].lat,events[i].lon);
+			var marker = new google.maps.Marker({
+				position: position,
+				map:map
+			});
+			marker.eventId = events[i]._id;
+			markers.push(marker);
+			google.maps.event.addListener(marker, 'click', panToMarker);
+	  }
 
-	  google.maps.event.addListener(curpolygon, 'click', isInsidePolygon);
+	  function panToMarker(data){
+	  	//console.log(data);
+	  	map.panTo(data.latLng);
+	  }
+
+	  /*google.maps.event.addListener(curpolygon, 'click', isInsidePolygon);
 	  google.maps.event.addListener(map, 'click', isInsideMap);
 
 	  function isInsidePolygon(data){
@@ -88,13 +110,7 @@ Template.mapPage.rendered = function(){
 	  	var lon = data.latLng.k;
 	  	var point = new google.maps.LatLng(lon,lat);
 
-	  	console.log(data.latLng);
-	  	if (curpolygon.Contains(point)) { // point is inside polygon 
-		  	console.log("Contains");
-		}
-		else{
-		  	console.log("Does not contain");
-		}
+	  	
 	  }
 
 	  function isInsideMap(data){
@@ -103,13 +119,7 @@ Template.mapPage.rendered = function(){
 	  	var point = new google.maps.LatLng(lon,lat);
 
 	  	console.log(data.latLng);
-	  	if (curpolygon.Contains(point)) { // point is inside polygon 
-		  	//console.log("Contains");
-		}
-		else{
-		  	//console.log("Does not contain");
-		}
-	  }
+	  }*/
 
 
 	  //var point = new google.maps.LatLng(52.05249047600099, -0.6097412109375); 
@@ -122,3 +132,79 @@ Template.mapPage.rendered = function(){
 	  map.panTo(position);
 	}	*/
 }
+
+Template.mapPage.helpers({
+	events: function(){
+		return Events.find({});
+	},
+	visible: function(){
+		return Events.findOne(this._id).visible;
+	},
+	scope: function(){
+		return Session.get("scope");
+	}
+});
+
+Template.mapPage.events({
+	'click #withinPolygon':function(){
+		for (var i = markers.length - 1; i >= 0; i--) {
+			for (var i = polygonArr.length - 1; i >= 0; i--) {
+				var lat = markers[i].position.D;
+			  	var lon = markers[i].position.k;
+			  	var point = new google.maps.LatLng(lon,lat);
+				if (polygonArr[i].Contains(point)) { // point is inside polygon 
+				  	;
+				}
+				else{
+				  	markers[i].setMap(null);
+				  	Events.update(markers[i].eventId, {$set: {visible: false}});
+				}
+			};
+		};
+		Session.set("scope","within");
+	},
+	'click #nearby':function(){
+		if(navigator.geolocation) {
+			console.log(navigator.geolocation);
+		    navigator.geolocation.getCurrentPosition(function(position) {
+		      var pos = new google.maps.LatLng(position.coords.latitude,
+		                                       position.coords.longitude);
+
+		      /*var infowindow = new google.maps.InfoWindow({
+		        map: map,
+		        position: pos,
+		        content: 'Du är här!'
+		      });*/
+
+		      for (var i = markers.length - 1; i >= 0; i--) {
+		      	var lat = markers[i].position.D;
+			  	var lon = markers[i].position.k;
+			  	var point = new google.maps.LatLng(lon,lat);
+		      	if((google.maps.geometry.spherical.computeDistanceBetween(pos, point) / 1000) > 0.5){
+		      		markers[i].setMap(null);
+		        }
+		      };
+		      //calculates distance between two points in km's
+
+		      map.setCenter(pos);
+		    }, function() {
+		      handleNoGeolocation(true);
+		    });
+		} else {
+		    // Browser doesn't support Geolocation
+		    handleNoGeolocation(false);
+		}
+		for (var i = markers.length - 1; i >= 0; i--) {
+			markers[i].setMap(map);
+			Events.update(markers[i].eventId, {$set: {visible: true}});
+		};
+		Session.set("scope","nearby");
+	},
+	'click #all':function(){
+		for (var i = markers.length - 1; i >= 0; i--) {
+			markers[i].setMap(map);
+			Events.update(markers[i].eventId, {$set: {visible: true}});
+		};
+		Session.set("scope","all");
+	}
+});

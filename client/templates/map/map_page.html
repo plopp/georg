@@ -1,4 +1,31 @@
 <template name="mapPage">
-Karta
-  <div id="map"></div>
+{{scope}}
+  <div class="row">
+    <div class="col-md-8">
+      <div id="map"></div>
+    </div>
+    <div class="col-md-4">
+      <div class="btn-group" role="group" aria-label="...">
+        <button id="withinPolygon" type="button" class="btn btn-default" aria-label="Left Align">
+          <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
+          <span>I områden</span>
+        </button>
+        <button id="nearby" type="button" class="btn btn-default" aria-label="Left Align">
+          <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
+          <span>I närheten</span>
+        </button>
+        <button id="all" type="button" class="btn btn-default" aria-label="Left Align">
+          <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
+          <span>Alla</span>
+        </button>
+      </div>
+      <div id="main" class="row-fluid">
+        {{#each events}}
+          {{#if visible}}
+          <div class="post">{{description}}</div>
+          {{/if}}
+        {{/each}}
+      </div>
+    </div>
+  </div>
 </template>
