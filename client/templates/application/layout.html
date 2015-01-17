@@ -1,0 +1,22 @@
+
+<template name="layout">
+    <div class="container">
+    <header class="navbar navbar-default" role="navigation"> 
+      <div class="navbar-header" style="width:100%">
+      	<div class="row" style="height:50px">
+	      	<div class="col-md-6">
+	        	<a class="navbar-brand" href="/">Georg</a>
+	        </div>
+	        <div class="col-md-6">
+	        	<div style="font-style: italic;line-height: 50px;horizontal-align:middle;">
+	        		<span align="right"></span>
+	        	</div>
+	        </div>
+        </div>
+      </div>
+    </header>
+    <div id="main" class="row-fluid">
+      {{> yield}}
+    </div>
+  </div>
+</template>
