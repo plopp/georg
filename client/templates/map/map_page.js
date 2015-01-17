@@ -104,10 +104,10 @@ Template.mapPage.rendered = function(){
 
 	  	console.log(data.latLng);
 	  	if (curpolygon.Contains(point)) { // point is inside polygon 
-		  	console.log("Contains");
+		  	//console.log("Contains");
 		}
 		else{
-		  	console.log("Does not contain");
+		  	//console.log("Does not contain");
 		}
 	  }
 
