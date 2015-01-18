@@ -1,0 +1,27 @@
+
+http://data.goteborg.se/Pages/WebserviceListing.aspx
+-----------------------------------------------------
+BridgeService: Göta Älvbron
+Cykelvägar OBS Filer. Göteborgs cykelvägnät shapefiler
+RiverService: Vattennivå floder
+SelfServiceBicycleService: positioner, lediga cykla lediga cykelställ Styr & Ställ
+TravelTimesService: beräkning av restider för fordonstrafik
+BikeService: Listar cykelverkstäder och pumpstationer.
+-----------------------------------------------------
+
+http://www.oppnadata.se/dataset
+-----------------------------------------------------
+Krisinformation:
+Trafik- och väginformaton:
+----------------------------------------------------
+Lista på olika öppna myndighetsdata från Sverige.
+----------------------------------------------------
+Brandriskvärden, analyserade
+Bebyggelseregistret
+SMHI öppna data
+Järnvägsdata
+Trafikverket - Vägdata, visningstjänst
+------------------------------------------------
+polisen
+-----------------------------------------------
+https://www.polisen.se/Vastra_Gotaland/Aktuellt/Handelser/Vastra-Gotaland/2015-01-17-0915-Farligt-foremal-misstankt-Goteborg/

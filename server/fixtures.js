@@ -41,3 +41,12 @@ if(Events.find().count() == 0){
 		visible:true
 	});
 }
+
+if(Positions.find().count() == 0){
+	Positions.insert({
+		lat:57.721836,
+		lon:11.952035,
+		description:"Brand i Backa",
+		visible:true
+	});
+}
