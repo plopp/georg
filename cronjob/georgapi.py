@@ -97,6 +97,32 @@ def addressToLatLong(address):
 	jsonResponse = json.load(response)
 	print jsonResponse
 
+def DeleteEvent(id):
+	try:
+		url = georgUrlEvents+"/"+urllib.quote(id)
+		opener = urllib2.build_opener(urllib2.HTTPHandler)
+		request = urllib2.Request(url)
+		request.add_header('Content-Type', 'your/contenttype')
+		request.get_method = lambda: 'DELETE'
+		url = opener.open(request)
+		return True
+	except:
+		return None
+
+
+def DeletePosition(id):
+	try:
+		url = georgUrlPositions+"/"+urllib.quote(id)
+		opener = urllib2.build_opener(urllib2.HTTPHandler)
+		request = urllib2.Request(url)
+		request.add_header('Content-Type', 'your/contenttype')
+		request.get_method = lambda: 'DELETE'
+		url = opener.open(request)
+		return True
+	except:
+		return None
+
+
 #	data = {
 #		"description": description,
 #		"lat": lat,

@@ -9,7 +9,7 @@ def main():
 	print("main")
 	global georgEvents
 	global georgPositions
-	
+
 	georgEvents = georgapi.GetAllEvents()
 	#print georgEvents
 
@@ -24,14 +24,15 @@ def main():
 		"lon": 12,
 		"visible": True
 	}
-	print georgapi.EventCreate(data)
+	#print georgapi.EventCreate(data)
 
-	georgPositions = georgapi.GetAllPositions()
+	#georgPositions = georgapi.GetAllPositions()
 
-	georgapi.UpdateEvent("qnu5J5kBpaPaa6NAk", data)
+	#georgapi.UpdateEvent("qnu5J5kBpaPaa6NAk", data)
 
-	print georgapi.GetEvent("9KXMXNsCE7XyyEaBL")
+	#print georgapi.GetEvent("9KXMXNsCE7XyyEaBL")
 
+	#print georgapi.DeleteEvent("LEshFkwmcyLy86qS2")
 
 if __name__ == '__main__':
 	#Call Main-function
