@@ -1,20 +1,34 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 import json
+import urllib
 import urllib2
 georgUrl = "http://localhost:3000/collectionapi/events"
 georgEvents = []
 
 def main():
 	print("main")
-	georgGetAll()
+        addressToLatLong("Töreboda Västra Götaland")
+	# georgGetAll()
 	#georgPut()
-	georgCheckAndPut("Beskrivningyo", 57, 12)
+	# georgCheckAndPut("Beskrivningyo", 57, 12)
 
 def georgCheckAndPut(description, lat, lon):
 	for value in georgEvents:
 		if description == value["description"]:
 			return
 	georgPut(description, lat, lon)
+
+
+def addressToLatLong(address):
+       	req = urllib2.Request(
+                "http://nominatim.openstreetmap.org/search/" +
+                urllib.quote(address) +
+                "?format=json&limit=1")
+	response = urllib2.urlopen(req)
+	jsonResponse = json.load(response)
+        print jsonResponse
+
 
 def georgPut(description, lat, lon):
 	#[{
