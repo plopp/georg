@@ -153,13 +153,17 @@ def UpdatePosition(id, dict):
 	return True
 
 def addressToLatLong(address):
+	#addressu = address.encode('utf-8')
+	#addressu += ", Göteborg"
+	addressu = address
 	req = urllib2.Request(
 		"http://nominatim.openstreetmap.org/search/" +
-		urllib.quote(address) +
+		urllib.quote(addressu) +
 		"?format=json&limit=1")
 	response = urllib2.urlopen(req)
 	jsonResponse = json.load(response)
-	print jsonResponse
+	#print jsonResponse
+	return jsonResponse
 
 def DeleteEvent(id):
 	url = georgUrlEvents+"/"+urllib.quote(id)
