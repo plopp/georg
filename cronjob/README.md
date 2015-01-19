@@ -16,6 +16,7 @@ Position objects
         description : Description,
         category : E.g. "concert", "popupstore", ...,
         source : e.g. data.göteborg.se, ...
+		url: A link to read more about the position
         creationTime : When the marker was created,
         location : {
           lon : Longitude,
@@ -40,7 +41,9 @@ Event objects
     [
       {
         id : unique event ID,
+		title: The title of the event
         description : Describing the event (at the position),
+		url: A link to read more about the event
         startTime : When the event starts,
         endTime : When the party is over
       },
